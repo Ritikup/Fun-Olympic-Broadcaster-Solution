@@ -87,6 +87,32 @@ namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
             [StringLength(255, ErrorMessage = "The Last Name field should have a maximum of 255 characters")]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
+
+
+            [Required]
+            [StringLength(255, ErrorMessage = "The Country field should have a maximum of 255 characters")]
+            [Display(Name = "Country")]
+            public string Country { get; set; }
+
+
+            [Required]
+            [StringLength(255, ErrorMessage = "The City field should have a maximum of 255 characters")]
+            [Display(Name = "City")]
+            public string City { get; set; }
+
+
+            [Required]
+            [Display(Name = "Date of Birth")]
+            public DateTime DOB { get; set; }
+
+
+
+
+
+
+
+
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -133,6 +159,9 @@ namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
                 user.FirsName = Input.FirstName;
                 
                 user.LastName=Input.LastName;
+                user.Country = Input.Country;
+                user.City=Input.City;
+                user.DOB = Input.DOB;
                
 
 
@@ -154,6 +183,10 @@ namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
                         protocol: Request.Scheme);
 
                     //Dynamically Sending Email
+
+
+
+
                    
                  await _emailService.SendAsync("sahritik73@gmail.com",
                         user.Email,
