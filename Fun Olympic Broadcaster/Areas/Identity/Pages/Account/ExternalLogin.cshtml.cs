@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Fun_Olympic_Broadcaster.Services;
+using Fun_Olympic_Broadcaster.Models;
 
 namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
 {
@@ -29,14 +31,20 @@ namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
+        private readonly IEmailService _emailService;
+
 
         public ExternalLoginModel(
             SignInManager<IdentityUser> signInManager,
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             ILogger<ExternalLoginModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+                        IEmailService emailService
+)
         {
+            _emailService = emailService;
+
             _signInManager = signInManager;
             _userManager = userManager;
             _userStore = userStore;
@@ -76,7 +84,42 @@ namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public class InputModel
-        {
+
+                    {
+
+
+
+
+            [Required]
+            [StringLength(255, ErrorMessage = "The first Name field should have a maximum of 255 characters")]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+
+            [Required]
+            [StringLength(255, ErrorMessage = "The Last Name field should have a maximum of 255 characters")]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+
+            [Required]
+            [StringLength(255, ErrorMessage = "The Country field should have a maximum of 255 characters")]
+            [Display(Name = "Country")]
+            public string Country { get; set; }
+
+
+            [Required]
+            [StringLength(255, ErrorMessage = "The City field should have a maximum of 255 characters")]
+            [Display(Name = "City")]
+            public string City { get; set; }
+
+
+            [Required]
+            [Display(Name = "Date of Birth")]
+            public DateTime DOB { get; set; }
+
+
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -131,7 +174,13 @@ namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
                 {
                     Input = new InputModel
                     {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                        Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                                           FirstName = info.Principal.FindFirstValue(ClaimTypes.GivenName),
+
+                        LastName = info.Principal.FindFirstValue(ClaimTypes.Surname)
+
+
+
                     };
                 }
                 return Page();
@@ -153,6 +202,14 @@ namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
+                user.FirsName = Input.FirstName;
+
+                user.LastName = Input.LastName;
+                user.Country = Input.Country;
+                user.City = Input.City;
+                user.DOB = Input.DOB;
+
+
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
@@ -162,6 +219,7 @@ namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
+                        
                         _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
 
                         var userId = await _userManager.GetUserIdAsync(user);
@@ -173,8 +231,15 @@ namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
                             values: new { area = "Identity", userId = userId, code = code },
                             protocol: Request.Scheme);
 
-                        await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                        await _emailService.SendAsync(
+                        user.Email,
+                         "Confirm your email",
+                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+
+
+                        //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                        //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                         // If account confirmation is required, we need to show the link if we don't have a real email sender
                         if (_userManager.Options.SignIn.RequireConfirmedAccount)
@@ -185,6 +250,7 @@ namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
                         await _signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);
                         return LocalRedirect(returnUrl);
                     }
+
                 }
                 foreach (var error in result.Errors)
                 {
@@ -197,11 +263,11 @@ namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private IdentityUser CreateUser()
+        private ApplicationUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<IdentityUser>();
+                return Activator.CreateInstance<ApplicationUser>();
             }
             catch
             {

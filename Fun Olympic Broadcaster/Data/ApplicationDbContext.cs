@@ -13,6 +13,8 @@ namespace Fun_Olympic_Broadcaster.Data
 
         }
 
+
+
         protected override void OnModelCreating(ModelBuilder builder)
             {
             base.OnModelCreating(builder);

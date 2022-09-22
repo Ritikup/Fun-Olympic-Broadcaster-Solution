@@ -83,7 +83,7 @@ namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
 
             ///////////---------Custom Email Send Code-----------////////////////
 
-            await _emailService.SendAsync("sahritik73@gmail.com",
+            await _emailService.SendAsync(
                         user.Email,
                          "Confirm your email",
                          $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");

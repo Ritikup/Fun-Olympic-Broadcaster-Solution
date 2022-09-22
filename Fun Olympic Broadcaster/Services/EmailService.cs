@@ -16,13 +16,28 @@ namespace Fun_Olympic_Broadcaster.Services
         }
        
          
-        public async Task SendAsync(string from, string to, string subject, string body)
+        public async Task SendAsync( string to, string subject, string body)
         {
-            var message = new MailMessage(from,
-               to,
-               subject,
-               body
-                );
+
+
+            MailMessage message = new MailMessage()
+            {
+                Body = body,
+                Subject = subject,
+                From = new MailAddress("sahritik73@gmail.com", "Fun Olympic"),
+
+                
+
+            };
+            message.To.Add(to);
+            //------------With no Display Name in Email-------------/////
+            //var message = new MailMessage(from,
+            //   to,
+            //   subject,
+            //   body);
+
+
+                          
 
 
             using (var emailClient = new SmtpClient(smtpConfig.Value.Host, smtpConfig.Value.Port))

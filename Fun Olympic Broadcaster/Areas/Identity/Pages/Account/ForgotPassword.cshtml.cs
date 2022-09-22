@@ -74,7 +74,7 @@ namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
                     values: new { area = "Identity", code },
                     protocol: Request.Scheme);
 
-                await _emailService.SendAsync("sahritik73@gmail.com",
+                await _emailService.SendAsync(
                        user.Email,
                         "Password Reset",
                         $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
