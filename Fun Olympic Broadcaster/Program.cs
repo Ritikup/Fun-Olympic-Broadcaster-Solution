@@ -2,7 +2,9 @@ using Fun_Olympic_Broadcaster.Data;
 using Fun_Olympic_Broadcaster.Models;
 using Fun_Olympic_Broadcaster.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,10 +14,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentity<IdentityUser,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.Configure<SMTPConfigModel>(builder.Configuration.GetSection("SMTP"));
+
 
 builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddAuthentication().AddFacebook(options =>
@@ -25,10 +28,10 @@ builder.Services.AddAuthentication().AddFacebook(options =>
 }).AddGoogle(options=>
 { options.ClientId = "335913462567-9o57s3dnfj698gu1hkvuf4f89r8kb6ce.apps.googleusercontent.com";
     options.ClientSecret = "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";
-})
-    ;
+});
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddRazorPages();
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -187,16 +187,16 @@ namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
 
 
 
-                   
-                 await _emailService.SendAsync(
-                        user.Email,
-                         "Confirm your email",
-                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    await _emailService.SendAsync(
+                           user.Email,
+                            "Confirm your email",
+                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
 
 
 
-                   ///////////////// //Manually Setting the email sending Service STARTTT/////////////////////////
+                    ///////////////// //Manually Setting the email sending Service STARTTT/////////////////////////
 
                     //var message = new MailMessage("sahritik73@gmail.com",
                     //   user.Email,
