@@ -1,0 +1,14 @@
+﻿@page
+@model Fun_Olympic_Broadcaster.Pages.LiveVideoPlayerModel
+@{
+}
+
+<div class="container">
+    <iframe height="500" width="100%" class="img-fluid" src="@Model.link" title="🔴 Live video player"
+            frameborder="0" allow="accelerometer; autoplay;clipboard-write; encrypted-media;
+gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<br />
+<h4>Comment:</h4>
+<textarea class="form-control" rows="5" id="comment"></textarea>
+

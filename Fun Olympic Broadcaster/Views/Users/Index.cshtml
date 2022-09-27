@@ -7,7 +7,7 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary"asp-area="Identity" asp-page="/Account/RegisterAdm">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -42,6 +42,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.FirsName)
+                <br>
+                    <a asp-area="Identity" asp-page="/Account/ForgotPassword">Reset Password</a> 
+
                     @*                <img src="@item.thumbnail" height="100" width="150">*@
 
             </td>

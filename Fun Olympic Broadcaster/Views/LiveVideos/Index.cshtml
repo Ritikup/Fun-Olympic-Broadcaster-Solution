@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Fun_Olympic_Broadcaster.Models.VideoUpoad>
+﻿@model IEnumerable<Fun_Olympic_Broadcaster.Models.LiveVideo>
 
 @{
     ViewData["Title"] = "Index";
@@ -9,13 +9,14 @@
 <p>
     <a class="btn btn-primary" asp-action="Create">Create New</a>
 </p>
-<table class="table table-hover" id="tblData">
+<table class="table table-hover">
     <thead>
         <tr class="table-active table-bordered">
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
+
                 @Html.DisplayNameFor(model => model.thumbnail)
             </th>
             <th>
@@ -35,19 +36,14 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr class="table-dark">
-                      
-            <td class="font-weight-bold">
+            <tr class="table-dark">
+            <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-
-                <img src="@item.thumbnail" height="100" width="150">
-                @*@Html.DisplayFor(modelItem => item.thumbnail)*@
-
-
-
-            </td>
+                    <img src="@item.thumbnail" height="100" width="150">
+@*                @Html.DisplayFor(modelItem => item.thumbnail)
+*@            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.description)
             </td>
@@ -69,7 +65,3 @@
 }
     </tbody>
 </table>
-@section Scripts{
-    <script src="~/js/Videojs.js"></script>
-}
-

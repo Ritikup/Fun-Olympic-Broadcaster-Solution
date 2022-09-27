@@ -10,87 +10,85 @@ using Fun_Olympic_Broadcaster.Models;
 
 namespace Fun_Olympic_Broadcaster.Controllers
 {
-    public class VideoUpoadsController : Controller
+    public class LiveVideosController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public VideoUpoadsController(ApplicationDbContext context)
+        public LiveVideosController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: VideoUpoads
+        // GET: LiveVideos
         public async Task<IActionResult> Index()
         {
-              return View(await _context.VideoUpoads.ToListAsync());
+              return View(await _context.LiveVideos.ToListAsync());
         }
 
-        // GET: VideoUpoads/Details/5
+        // GET: LiveVideos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.VideoUpoads == null)
+            if (id == null || _context.LiveVideos == null)
             {
                 return NotFound();
             }
 
-            var videoUpoad = await _context.VideoUpoads
+            var liveVideo = await _context.LiveVideos
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (videoUpoad == null)
+            if (liveVideo == null)
             {
                 return NotFound();
             }
 
-            return View(videoUpoad);
+            return View(liveVideo);
         }
 
-        // GET: VideoUpoads/Create
+        // GET: LiveVideos/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: VideoUpoads/Create
+        // POST: LiveVideos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,thumbnail,description,category,rivals,videolink")] VideoUpoad videoUpoad)
+        public async Task<IActionResult> Create([Bind("Id,Name,thumbnail,description,category,rivals,videolink")] LiveVideo liveVideo)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(videoUpoad);
+                _context.Add(liveVideo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(videoUpoad);
+            return View(liveVideo);
         }
 
-        // GET: VideoUpoads/Edit/5
+        // GET: LiveVideos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-
-
-            if (id == null || _context.VideoUpoads == null)
+            if (id == null || _context.LiveVideos == null)
             {
                 return NotFound();
             }
 
-            var videoUpoad = await _context.VideoUpoads.FindAsync(id);
-            if (videoUpoad == null)
+            var liveVideo = await _context.LiveVideos.FindAsync(id);
+            if (liveVideo == null)
             {
                 return NotFound();
             }
-            return View(videoUpoad);
+            return View(liveVideo);
         }
 
-        // POST: VideoUpoads/Edit/5
+        // POST: LiveVideos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,thumbnail,description,category,rivals,videolink")] VideoUpoad videoUpoad)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,thumbnail,description,category,rivals,videolink")] LiveVideo liveVideo)
         {
-            if (id != videoUpoad.Id)
+            if (id != liveVideo.Id)
             {
                 return NotFound();
             }
@@ -99,12 +97,12 @@ namespace Fun_Olympic_Broadcaster.Controllers
             {
                 try
                 {
-                    _context.Update(videoUpoad);
+                    _context.Update(liveVideo);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!VideoUpoadExists(videoUpoad.Id))
+                    if (!LiveVideoExists(liveVideo.Id))
                     {
                         return NotFound();
                     }
@@ -115,51 +113,49 @@ namespace Fun_Olympic_Broadcaster.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(videoUpoad);
+            return View(liveVideo);
         }
 
-        // GET: VideoUpoads/Delete/5
+        // GET: LiveVideos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.VideoUpoads == null)
+            if (id == null || _context.LiveVideos == null)
             {
                 return NotFound();
             }
 
-            var videoUpoad = await _context.VideoUpoads
+            var liveVideo = await _context.LiveVideos
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (videoUpoad == null)
+            if (liveVideo == null)
             {
                 return NotFound();
             }
 
-            return View(videoUpoad);
+            return View(liveVideo);
         }
 
-        // POST: VideoUpoads/Delete/5
+        // POST: LiveVideos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.VideoUpoads == null)
+            if (_context.LiveVideos == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.VideoUpoads'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.LiveVideos'  is null.");
             }
-            var videoUpoad = await _context.VideoUpoads.FindAsync(id);
-            if (videoUpoad != null)
+            var liveVideo = await _context.LiveVideos.FindAsync(id);
+            if (liveVideo != null)
             {
-                _context.VideoUpoads.Remove(videoUpoad);
+                _context.LiveVideos.Remove(liveVideo);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool VideoUpoadExists(int id)
+        private bool LiveVideoExists(int id)
         {
-          return _context.VideoUpoads.Any(e => e.Id == id);
+          return _context.LiveVideos.Any(e => e.Id == id);
         }
-
-
     }
 }

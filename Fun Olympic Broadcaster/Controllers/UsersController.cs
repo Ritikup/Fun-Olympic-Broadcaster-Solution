@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Fun_Olympic_Broadcaster.Data;
 using Fun_Olympic_Broadcaster.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Fun_Olympic_Broadcaster.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private readonly ApplicationDbContext _context;
