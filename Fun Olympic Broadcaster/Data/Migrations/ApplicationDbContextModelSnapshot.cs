@@ -58,6 +58,33 @@ namespace Fun_Olympic_Broadcaster.Data.Migrations
                     b.ToTable("LiveVideos");
                 });
 
+            modelBuilder.Entity("Fun_Olympic_Broadcaster.Models.News", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Heading")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NewsDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NewsImg")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PublishedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Newss");
+                });
+
             modelBuilder.Entity("Fun_Olympic_Broadcaster.Models.VideoUpoad", b =>
                 {
                     b.Property<int>("Id")

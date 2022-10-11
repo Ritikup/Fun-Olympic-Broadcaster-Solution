@@ -35,6 +35,10 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="News" asp-action="NewsPublic">News and Notices</a>
+                        </li>
                         <li class="nav-item">
                              @if (signinManager.IsSignedIn(User))
                              
@@ -78,6 +82,7 @@
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="Index">Manage Users</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="VideoUpoads" asp-action="Index">Manage Game Videos</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="LiveVideos" asp-action="Index">Manage Live Broadcast</a></li>
+                               <li><a class="dropdown-item" asp-area="" asp-controller="News" asp-action="Index">Create News</a></li>
 
                             </ul>
                         </div>

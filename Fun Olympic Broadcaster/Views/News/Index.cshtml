@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Fun_Olympic_Broadcaster.Models.News>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a class="btn btn-lg btn-primary" asp-action="Create">Create new News</a>
+</p>
+<table class="table table-hover" >
+    <thead>
+        <tr class ="table-active table-bordered">
+            <th>
+                @Html.DisplayNameFor(model => model.Heading)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NewsDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PublishedDate)
+            </th>
+            <th>
+
+                @Html.DisplayNameFor(model => model.NewsImg)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+            <tr class="table-dark">
+            <td>
+                @Html.DisplayFor(modelItem => item.Heading)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NewsDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublishedDate)
+            </td>
+            <td>
+                    <img src="@item.NewsImg" height="150" width="220">
+
+               
+            </td>
+            <td>
+                    <a class ="badge bg-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a class ="badge bg-info" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a class ="badge bg-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -4,14 +4,14 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>News Management Page</h1>
 
 <p>
-    <a class="btn btn-primary"asp-area="Identity" asp-page="/Account/RegisterAdm">Create New</a>
+    <a class="btn btn-lg btn-primary"asp-area="Identity" asp-page="/Account/RegisterAdm">Create New</a>
 </p>
-<table class="table">
+<table class="table table-hover">
     <thead>
-        <tr>
+        <tr class="table-active table-bordered">
             <th>
                 @Html.DisplayNameFor(model => model.FirsName)
             </th>
@@ -33,17 +33,20 @@
             <th>
                 @Html.DisplayNameFor(model => model.DOB)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailConfirmed)
+            </th>
            
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+            <tr class="table-dark">
             <td>
                 @Html.DisplayFor(modelItem => item.FirsName)
                 <br>
-                    <a asp-area="Identity" asp-page="/Account/ForgotPassword">Reset Password</a> 
+                    <a class="badge bg-danger" asp-area="Identity" asp-page="/Account/ForgotPassword">Reset Password</a>
 
                     @*                <img src="@item.thumbnail" height="100" width="150">*@
 
@@ -69,10 +72,13 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.DOB)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailConfirmed)
+                </td>
             <td>
-                    <a asp-action="Update" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a class="badge bg-primary" asp-action="Update" asp-route-id="@item.Id">Edit</a> |
+                    <a class="badge bg-info" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a class="badge bg-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

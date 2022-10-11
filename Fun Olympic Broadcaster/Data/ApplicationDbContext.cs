@@ -15,6 +15,7 @@ namespace Fun_Olympic_Broadcaster.Data
         public DbSet<VideoUpoad> VideoUpoads { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<LiveVideo> LiveVideos { get; set; }
+        public DbSet<News> Newss { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

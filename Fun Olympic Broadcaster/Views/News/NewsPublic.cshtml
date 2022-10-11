@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Fun_Olympic_Broadcaster.Models.News>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1> News and Notices</h1>
+
+
+<table class="table table-hover" >
+    <thead>
+        <tr class ="table-active table-bordered">
+            <th>
+
+                @Html.DisplayNameFor(model => model.NewsImg)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Heading)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NewsDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PublishedDate)
+            </th>
+           
+            
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+            <tr class="table-dark">
+                                <td>
+                        <img src="@item.NewsImg" height="150" width="220">
+
+
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Heading)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NewsDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublishedDate)
+            </td>
+
+          
+        </tr>
+}
+    </tbody>
+</table>

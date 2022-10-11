@@ -14,6 +14,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+builder.Services.AddSignalR();
 builder.Services.AddIdentity<IdentityUser,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -47,6 +48,7 @@ else
 }
 
 
+app.MapHub<ChatHub>("/chatHub");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
