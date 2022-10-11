@@ -1,0 +1,54 @@
+﻿@model Fun_Olympic_Broadcaster.Models.VideoUpoad
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Match Video Upload</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.thumbnail)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.thumbnail)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.category)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.category)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.rivals)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.rivals)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.videolink)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.videolink)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a class="btn btn-danger" asp-action="Index">Back to List</a>
+</div>

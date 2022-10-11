@@ -1,8 +1,77 @@
-﻿@{
+﻿@model IEnumerable<VideoUpoad>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signinManager
+@{
     ViewData["Title"] = "Home Page";
 }
+@*<div class="container-fluid h-75" >
+            
+                <marquee class="text-dark">Fun Olympic 2022. The city of Bayjing Welcomes You. Watch a wide range of sports enjoy. With Love - Fun Olympic 2022 </marquee>
+            
+        </div>*@
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="jumbotron container-fluid" style=" height:90vh; width:100%; background-repeat: no-repeat;
+    background-position: center;
+ 
+  background-size: cover;
+  position: relative;background-image:url(https://line25.com/wp-content/uploads/2021/07/1.-Tennis-Ball-in-Black-Background.jpg);">
+    <h1 class="display-4 text-white text-center">Fun Olympic 2022</h1>
+    <h2 class="m-5 text-white text-center">The city of Bayjing Heartly welcomes you to the most awaited sports.</h2>
+    <hr class="my-4">
+    <h3 class=" mt-4 text-white text-center">Watch - Play - Enjoy - Eat - and - Love </h3>
+   
+    <p class="lead text-center mt-5">
+        <a class="btn text-center btn-danger btn-lg" href="#" role="button">Watch Games</a>
+    </p>
 </div>
+
+
+
+
+
+<div class="text mt-3">
+    <h2 class="display-6">Highlights</h2>
+
+</div>
+<div class="container">
+
+<div class="row pb-3">
+    @foreach (var video in Model)
+    {
+            <div class="col-lg-3 col-md-6 mb-4 ">
+
+
+                <div class="col-12 p1" style="border:1px solid #008cba; border-radius:5px;">
+                   
+                        <div class="card">
+                            <img src="@video.thumbnail" class="card-img-top rounded " style="height:180px" />
+                        <div class="p-1" style="height:100px">
+                            <p class="Card-title h5 text-xl-center">@video.Name</p>
+                            <p class="Card-title text-secondary text-dark">@video.rivals</p>
+
+                        </div>
+                        <p class="card-title text-primary fw-bold">@video.description</p>
+
+
+                        @if (signinManager.IsSignedIn(User))
+                        {
+                            <a class="btn btn-primary" asp-page="/VideoPlayer" asp-route-id="@video.Id">Play</a>
+
+                    
+                        }
+                        else{
+                            <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Play</a>
+
+                        }
+                        
+                </div>
+                
+
+            </div>
+
+        </div>
+
+    }
+</div>
+</div>
+                  

@@ -1,0 +1,53 @@
+﻿
+@model ApplicationUser
+@{
+    ViewData["Title"] = "UPDATE USER";
+}
+
+<h1 class="bg-info text-white">Update User</h1>
+<a asp-action="Update" class="btn btn-secondary">Back</a>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="Update" method="post">
+    <div class="form-group">
+        <label asp-for="Id"></label>
+        <input asp-for="Id" class="form-control" disabled />
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="FirsName"></label>
+        <input asp-for="FirsName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Country"></label>
+        <input asp-for="Country" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="City"></label>
+        <input asp-for="City" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PhoneNumber"></label>
+        <input asp-for="PhoneNumber" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DOB"></label>
+        <input asp-for="DOB" class="form-control" />
+    </div>
+
+   
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

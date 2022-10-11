@@ -34,8 +34,11 @@ namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IEmailService _emailService;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
+                        RoleManager<IdentityRole> roleManager,
+
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
@@ -43,6 +46,7 @@ namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
             IEmailSender emailSender,
             IEmailService emailService)
         {
+            _roleManager = roleManager;
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
@@ -140,11 +144,20 @@ namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            public string Role { get; set; }
+
+
         }
 
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            if (!_roleManager.RoleExistsAsync("admin").GetAwaiter().GetResult())
+            {
+                _roleManager.CreateAsync(new IdentityRole("admin")).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole("user")).GetAwaiter().GetResult();
+
+            }
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -155,6 +168,7 @@ namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
+
                 var user =new ApplicationUser();
                 user.FirsName = Input.FirstName;
                 
@@ -172,7 +186,15 @@ namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+                    if (Input.Role == null)
+                    {
+                        await _userManager.AddToRoleAsync(user, "user");
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, Input.Role);
 
+                    }
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -187,16 +209,16 @@ namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
 
 
 
-                   
-                 await _emailService.SendAsync(
-                        user.Email,
-                         "Confirm your email",
-                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    await _emailService.SendAsync(
+                           user.Email,
+                            "Confirm your email",
+                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
 
 
 
-                   ///////////////// //Manually Setting the email sending Service STARTTT/////////////////////////
+                    ///////////////// //Manually Setting the email sending Service STARTTT/////////////////////////
 
                     //var message = new MailMessage("sahritik73@gmail.com",
                     //   user.Email,
@@ -226,6 +248,7 @@ namespace Fun_Olympic_Broadcaster.Areas.Identity.Pages.Account
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+
                     }
                     else
                     {
